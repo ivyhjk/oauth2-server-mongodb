@@ -6,7 +6,7 @@
   "author": "Elvis Munoz F. <elvis.munoz.f@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "tests": "DEBUG=app:tests* mocha --file tests/database-setup.js --timeout 10000 --exit --require @babel/register tests/**/**.spec.js"
+    "tests": "mocha --file tests/database-setup.js --timeout 10000 --exit --require @babel/register tests/**/**.spec.js"
   },
   "dependencies": {
     "argon2": "^0.20.0",
