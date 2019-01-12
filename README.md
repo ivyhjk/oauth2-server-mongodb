@@ -38,3 +38,34 @@ const model = new MongooseOAuth2({ User, Token });
 // use your model in any oauth2-server implementation
 // ...
 ```
+
+## Running tests
+
+To run tests we suggest to use the pre-defined MongoDB image with docker-compose:
+```
+docker-compose up -d
+```
+
+And then:
+```
+yarn tests
+```
+
+Alternatively you can create the following environment variables:
+
+| Name                | Default                     |
+| :------------------ | :-------------------------- |
+| MONGODB_USERNAME    | dummy                       |
+| MONGODB_PASSWORD    | dummy                       |
+| MONGODB_HOST        | 127.0.0.1                   |
+| MONGODB_PORT        | 27017                       |
+| MONGODB_DATABASE    | oauth2_server_mongodb_tests |
+| MONGODB_AUTH_SOURCE | dummy                       |
+
+And then:
+```
+yarn tests
+```
+
+Also you can edit directly the `tests/database-setup.js` file and use
+your own DSN.
