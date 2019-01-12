@@ -1,0 +1,23 @@
+{
+  "name": "oauth2-server-mongodb",
+  "version": "1.0.0",
+  "description": "OAuth2 server implementation with MongoDB integration",
+  "repository": "https://github.com/ivyhjk/oauth2-server-mongodb.git",
+  "author": "Elvis Munoz F. <elvis.munoz.f@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "tests": "DEBUG=app:tests* mocha --file tests/database-setup.js --timeout 10000 --exit --require @babel/register tests/**/**.spec.js"
+  },
+  "dependencies": {
+    "argon2": "^0.20.0",
+    "csprng": "^0.1.2",
+    "mongoose": "^5.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
