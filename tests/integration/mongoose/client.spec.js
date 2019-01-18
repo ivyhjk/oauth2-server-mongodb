@@ -7,31 +7,31 @@ describe('Client model', () => {
   });
 
   it('try to create a new client without a name', async () => {
-      let client = null;
+    let client = null;
 
-      try {
-        client = await OAuth2Client.create({
-          redirectUris: ['/']
-        });
-      } catch (e) {
-        expect(e.message).to.equal('OAuth2Client validation failed: name: Path `name` is required.');
-      }
+    try {
+      client = await OAuth2Client.create({
+        redirectUris: ['/']
+      });
+    } catch (e) {
+      expect(e.message).to.equal('OAuth2Client validation failed: name: Path `name` is required.');
+    }
 
-      expect(client).to.be.null;
+    expect(client).to.be.null;
   });
 
   it('try to create a new client without redirect uris', async () => {
-      let client = null;
+    let client = null;
 
-      try {
-        client = await OAuth2Client.create({
-          name: 'Foo'
-        });
-      } catch (e) {
-        expect(e.message).to.equal('OAuth2Client validation failed: redirectUris: please specify at least one redirect uri.');
-      }
+    try {
+      client = await OAuth2Client.create({
+        name: 'Foo'
+      });
+    } catch (e) {
+      expect(e.message).to.equal('OAuth2Client validation failed: redirectUris: please specify at least one redirect uri.');
+    }
 
-      expect(client).to.be.null;
+    expect(client).to.be.null;
   });
 
   it('create a new simple client', async () => {
@@ -40,7 +40,7 @@ describe('Client model', () => {
       redirectUris: ['/bar', '/baz'],
     });
 
-    let client = await OAuth2Client.findOne({name: 'Foo'});
+    let client = await OAuth2Client.findOne({ name: 'Foo' });
 
     expect(client).to.not.be.null;
     expect(client.name).to.equal('Foo');

@@ -9,21 +9,16 @@ import {
 } from './mongoose';
 
 export class MongooseOAuth2 {
-  constructor({
-    Client,
-    Grant,
-    Group,
-    Scope,
-    Token,
-    User,
-  } = {
-    Client: OAuth2Client,
-    Grant: OAuth2Grant,
-    Group: OAuth2Group,
-    Scope: OAuth2Scope,
-    Token: OAuth2Token,
-    User: OAuth2User,
-  }) {
+  constructor(
+    { Client, Grant, Group, Scope, Token, User } = {
+      Client: OAuth2Client,
+      Grant: OAuth2Grant,
+      Group: OAuth2Group,
+      Scope: OAuth2Scope,
+      Token: OAuth2Token,
+      User: OAuth2User,
+    }
+  ) {
     this.Client = Client;
     this.Grant = Grant;
     this.Group = Group;
@@ -47,7 +42,7 @@ export class MongooseOAuth2 {
         user: 1,
       });
 
-    if (! token) {
+    if (!token) {
       return null;
     }
 
@@ -88,7 +83,7 @@ export class MongooseOAuth2 {
         user: 1,
       });
 
-    if (! token) {
+    if (!token) {
       return null;
     }
 
@@ -136,7 +131,7 @@ export class MongooseOAuth2 {
         refreshTokenLifetime: 1,
       });
 
-    if (! client || (client.validateSecret && client.secret !== clientSecret)) {
+    if (!client || (client.validateSecret && client.secret !== clientSecret)) {
       return null;
     }
 
@@ -164,7 +159,7 @@ export class MongooseOAuth2 {
       })
       .populate('groups');
 
-    if (! user || ! (await Argon2.verify(user.password, password))) {
+    if (!user || !(await Argon2.verify(user.password, password))) {
       return null;
     }
 

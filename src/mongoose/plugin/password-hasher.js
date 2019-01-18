@@ -1,7 +1,7 @@
 import Argon2 from 'argon2';
 
-export default function (schema) {
-  const passwordHasher = async function (next) {
+export default function(schema) {
+  const passwordHasher = async function(next) {
     if (typeof this._update !== 'undefined') {
       if (
         typeof this._update.password !== 'undefined'

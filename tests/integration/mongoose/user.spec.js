@@ -33,33 +33,36 @@ describe('User model', () => {
     expect(user.active).to.be.true;
   });
 
-  it('try to update the user password and check if new password is hashed or not', async () => {
-    const user = await OAuth2User.create({
-      name: 'the name',
-      username: 'A Username',
-      password: 'password',
-      email: 'example@example.com',
-    });
+  it(
+    'try to update the user password and check if new password is hashed or not',
+    async () => {
+      const user = await OAuth2User.create({
+        name: 'the name',
+        username: 'A Username',
+        password: 'password',
+        email: 'example@example.com',
+      });
 
-    // expect password is not touched, we just are updating the email.
-    await OAuth2User.updateOne(
-      { _id: user._id.toString() },
-      { $set: { email: 'another@example.com' } }
-    );
+      // expect password is not touched, we just are updating the email.
+      await OAuth2User.updateOne(
+        { _id: user._id.toString() },
+        { $set: { email: 'another@example.com' } }
+      );
 
-    const updated = await OAuth2User.findOne({ _id: user._id.toString() });
+      const updated = await OAuth2User.findOne({ _id: user._id.toString() });
 
-    expect(updated.email).to.be.equal('another@example.com');
-    expect(updated.password).to.be.equal(user.password);
+      expect(updated.email).to.be.equal('another@example.com');
+      expect(updated.password).to.be.equal(user.password);
 
-    // now we are updating the password.
-    await OAuth2User.updateOne(
-      { _id: user._id.toString() },
-      { $set: { password: 'the new password' } }
-    );
+      // now we are updating the password.
+      await OAuth2User.updateOne(
+        { _id: user._id.toString() },
+        { $set: { password: 'the new password' } }
+      );
 
-    const anotherUpdate = await OAuth2User.findOne({ _id: user._id.toString()});
+      const anotherUpdate = await OAuth2User.findOne({ _id: user._id.toString() });
 
-    expect(anotherUpdate.password).to.not.be.equal(user.password);
-  });
+      expect(anotherUpdate.password).to.not.be.equal(user.password);
+    }
+  );
 });

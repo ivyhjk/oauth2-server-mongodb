@@ -36,7 +36,7 @@ describe('Token model', () => {
       scopes: ['foo', 'bar'],
     });
 
-    let token = await OAuth2Token.findOne({accessToken: 'an access token'})
+    let token = await OAuth2Token.findOne({ accessToken: 'an access token' })
       .populate('user')
       .populate('client');
 
