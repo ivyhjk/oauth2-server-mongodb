@@ -6,7 +6,7 @@
   "author": "Elvis Munoz F. <elvis.munoz.f@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "tests": "mocha --file tests/database-setup.js --timeout 10000 --exit --require @babel/register tests/**/**.spec.js"
+    "tests": "mocha --file tests/database-setup.js --timeout 10000 --exit --require @babel/register './tests/**/**.spec.js'"
   },
   "dependencies": {
     "argon2": "^0.20.0",
@@ -18,6 +18,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "oauth2-server": "^3.0.1"
   }
 }
