@@ -3,8 +3,7 @@ import Mongoose, { Schema } from 'mongoose';
 export const OAuth2GroupSchema = new Schema(
   {
     scopes: [{
-      type: Schema.Types.ObjectId,
-      ref: 'OAuth2Scope',
+      type: String,
     }],
     name: {
       type: String,
