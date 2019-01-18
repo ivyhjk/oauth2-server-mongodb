@@ -205,7 +205,6 @@ describe('OAuth2 Mongoose model integration', () => {
     const model = new MongooseOAuth2();
 
     const token = {
-      accessToken: 'access token',
       refreshToken: 'refresh token',
     };
 
