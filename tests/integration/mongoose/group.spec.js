@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { OAuth2Group, OAuth2Scope } from './../../src/mongoose';
+import { OAuth2Group } from './../../../src/mongoose';
 
 describe('Group model', () => {
   beforeEach(async () => {
@@ -19,30 +19,21 @@ describe('Group model', () => {
   });
 
   it('create a new group', async () => {
-    // at first, create some scopes.
-    const firstScope = await OAuth2Scope.create({
-      name: 'foo'
-    });
-
-    const secondScope = await OAuth2Scope.create({
-      name: 'bar'
-    });
-
     await OAuth2Group.create({
       name: 'Foo',
       scopes: [
-        firstScope._id.toString(),
-        secondScope._id.toString(),
+        'foo',
+        'bar',
       ],
     });
 
-    let group = await OAuth2Group.findOne({name: 'Foo'}).populate('scopes');
+    let group = await OAuth2Group.findOne({name: 'Foo'});
 
     expect(group).to.not.be.null;
     expect(group.name).to.equal('Foo');
     expect(group.scopes).to.have.lengthOf(2);
-    expect(group.scopes[0].name).to.equal('foo');
-    expect(group.scopes[1].name).to.equal('bar');
+    expect(group.scopes[0]).to.equal('foo');
+    expect(group.scopes[1]).to.equal('bar');
   });
 
   it('check timestamps', async () => {

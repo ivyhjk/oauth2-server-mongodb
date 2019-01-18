@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { OAuth2Client, OAuth2Scope } from './../../src/mongoose';
+import { OAuth2Client, OAuth2Scope } from './../../../src/mongoose';
 
 describe('Client model', () => {
   beforeEach(async () => {

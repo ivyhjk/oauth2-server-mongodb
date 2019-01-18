@@ -3,7 +3,7 @@ import {
   OAuth2Token,
   OAuth2User,
   OAuth2Client,
-} from './../../src/mongoose';
+} from './../../../src/mongoose';
 
 describe('Token model', () => {
   beforeEach(async () => {

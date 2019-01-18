@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { OAuth2Grant, OAuth2Scope } from './../../src/mongoose';
+import { OAuth2Grant, OAuth2Scope } from './../../../src/mongoose';
 
 describe('Grant model', () => {
   beforeEach(async () => {

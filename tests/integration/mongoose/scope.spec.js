@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { OAuth2Scope } from './../../src/mongoose';
+import { OAuth2Scope } from './../../../src/mongoose';
 
 describe('Scope model', () => {
   beforeEach(async () => {

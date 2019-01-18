@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { OAuth2User, OAuth2Group } from './../../src/mongoose';
+import { OAuth2User, OAuth2Group } from './../../../src/mongoose';
 
 describe('User model', () => {
   beforeEach(async () => {
