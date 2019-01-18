@@ -61,7 +61,7 @@ describe('OAuth2 Mongoose model acceptance', () => {
     expect(token).to.be.null;
   });
 
-  it('validate a simple token', async () => {
+  it('validate a simple token generation', async () => {
     // create a new client.
     const client = await OAuth2Client.create({
       name: 'the client',
