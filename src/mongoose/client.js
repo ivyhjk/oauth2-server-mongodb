@@ -20,6 +20,18 @@ export const OAuth2ClientSchema = new Schema(
       type: String,
       default: () => csprng(256)
     },
+    validateSecret: {
+      type: Boolean,
+      default: false,
+    },
+    accessTokenLifetime: {
+      type: Number,
+      default: 3600,
+    },
+    refreshTokenLifetime: {
+      type: Number,
+      default: 3600,
+    },
     redirectUris: {
       type: [String],
       required: true,
