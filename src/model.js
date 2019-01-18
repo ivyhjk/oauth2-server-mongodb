@@ -64,13 +64,15 @@ export class MongooseOAuth2 {
     };
   }
 
-  // TODO: finish this.
-  // async verifyScope(accessToken, scopes) {
-  //   console.log('verifyScope::accessToken', accessToken);
-  //   console.log('verifyScope::scopes', scopes);
-  //
-  //   return scopes.filter((scope) => accessToken.scopes.includes(scope));
-  // }
+  async verifyScope(accessToken, scopes) {
+    for (const scope of scopes) {
+      if (accessToken.scope.includes(scope)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   async getRefreshToken(refreshToken) {
     let token = await this.Token
