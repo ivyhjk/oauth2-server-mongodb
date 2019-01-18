@@ -106,7 +106,6 @@ export class MongooseOAuth2 {
   async revokeToken(token) {
     let response = await this.Token.updateOne(
       {
-        accessToken: token.accessToken,
         refreshToken: token.refreshToken,
         revokedAt: null
       },
