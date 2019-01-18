@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import OAuth2Server, { Request, Response } from 'oauth2-server';
-import { MongooseOAuth2 } from './../../src/model'
+import { Request, Response } from 'oauth2-server';
 import { OAuth2Token, OAuth2Client, OAuth2User, OAuth2Scope } from './../../src/mongoose';
+import { generateToken, oauth } from './utils';
 
 describe('OAuth2 Mongoose model acceptance', () => {
   beforeEach(async () => {
@@ -11,11 +11,74 @@ describe('OAuth2 Mongoose model acceptance', () => {
     await OAuth2Scope.deleteMany({});
   });
 
-  it('try to authenticate but the access token is not valid', async () => {
-    const oauth = new OAuth2Server({
-      model: new MongooseOAuth2()
+  it('try to generate a new token with a GET request', async () => {
+    let request = new Request({
+      method: 'GET',
+      headers: {},
+      query: {},
     });
 
+    let response = new Response();
+
+    let token = null;
+
+    try {
+      token = await oauth.token(request, response);
+    } catch (e) {
+      expect(e.name).to.be.equal('invalid_request');
+    }
+
+    expect(token).to.be.null;
+  });
+
+  it('validate a simple token generation', async () => {
+    let token = await generateToken();
+
+    expect(token.accessToken).to.exist;
+    expect(token.accessTokenExpiresAt).to.exist;
+    expect(token.refreshToken).to.exist;
+    expect(token.refreshTokenExpiresAt).to.exist;
+    expect(token.scope).to.exist;
+    expect(token.client).to.exist;
+    expect(token.user).to.exist;
+  });
+
+  it('try to refresh a simple token', async () => {
+    // at first, generate the token.
+    let token = await generateToken();
+
+    // then, try to refresh the token.
+    let refreshTokenRequest = new Request({
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "content-length": 1,
+      },
+      query: {
+
+      },
+      body: {
+        client_id: token.client.id,
+        grant_type: 'refresh_token',
+        refresh_token: token.refreshToken,
+      }
+    });
+
+    let refreshedToken = await oauth.token(
+      refreshTokenRequest,
+      new Response(),
+    );
+
+    expect(refreshedToken.accessToken).to.exist;
+    expect(refreshedToken.accessTokenExpiresAt).to.exist;
+    expect(refreshedToken.refreshToken).to.exist;
+    expect(refreshedToken.refreshTokenExpiresAt).to.exist;
+    expect(refreshedToken.scope).to.exist;
+    expect(refreshedToken.client).to.exist;
+    expect(refreshedToken.user).to.exist;
+  });
+
+  it('try to authenticate but the access token is not valid', async () => {
     let request = new Request({
       method: 'GET',
       query: {},
@@ -37,169 +100,63 @@ describe('OAuth2 Mongoose model acceptance', () => {
     expect(authentication).to.be.null;
   });
 
-  it('try to generate a new token with a GET request', async () => {
-    const oauth = new OAuth2Server({
-      model: new MongooseOAuth2()
-    });
+  it('authenticate the request', async () => {
+    const token = await generateToken();
 
-    let request = new Request({
+    let authenticateRequest = new Request({
       method: 'GET',
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${token.accessToken}`
+      },
       query: {},
     });
 
-    let response = new Response();
+    // expect no failure.
+    await oauth.authenticate(authenticateRequest, new Response());
+  });
 
-    let token = null;
+  it('authenticate the request with the given scopes', async () => {
+    const token = await generateToken();
+
+    let authenticateRequest = new Request({
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.accessToken}`
+      },
+      query: {},
+    });
+
+    // expect no failure.
+    await oauth.authenticate(
+      authenticateRequest,
+      new Response(),
+      { scope: ['admin', 'basic'] }
+    );
+  });
+
+  it('authenticate the request with the given scopes', async () => {
+    const token = await generateToken();
+
+    let authenticateRequest = new Request({
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.accessToken}`
+      },
+      query: {},
+    });
+
+    let authenticatedToken = null;
 
     try {
-      token = await oauth.token(request, response);
+      authenticatedToken = await oauth.authenticate(
+        authenticateRequest,
+        new Response(),
+        { scope: ['unbound scope'] }
+      );
     } catch (e) {
-      expect(e.name).to.be.equal('invalid_request');
+      expect(e.name).to.be.equal('insufficient_scope');
     }
 
-    expect(token).to.be.null;
-  });
-
-  it('validate a simple token generation', async () => {
-    // create a new client.
-    const client = await OAuth2Client.create({
-      name: 'the client',
-      redirectUris: ['/'],
-      grants: ['password']
-    });
-
-    // create a new user.
-    await OAuth2User.create({
-      name: 'a user',
-      email: 'example@example.com',
-      username: 'the username',
-      password: 'the password',
-    });
-
-    // create some scopes.
-    await OAuth2Scope.insertMany([
-      { name: 'basic' },
-      { name: 'admin' },
-      { name: 'edit' },
-    ]);
-
-    // generate the OAuth2 server.
-    const oauth = new OAuth2Server({
-      model: new MongooseOAuth2(),
-      requireClientAuthentication: {
-        password: false,
-      },
-    });
-
-    let request = new Request({
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "content-length": 1,
-      },
-      query: {},
-      body: {
-        client_id: client._id.toString(),
-        grant_type: 'password',
-        username: 'the username',
-        password: 'the password',
-        scope: 'basic,admin',
-      }
-    });
-
-    let response = new Response();
-
-    let token = await oauth.token(request, response);
-
-    expect(token.accessToken).to.exist;
-    expect(token.accessTokenExpiresAt).to.exist;
-    expect(token.refreshToken).to.exist;
-    expect(token.refreshTokenExpiresAt).to.exist;
-    expect(token.scope).to.exist;
-    expect(token.client).to.exist;
-    expect(token.user).to.exist;
-  });
-
-  it('try to refresh a simple token', async () => {
-    // create a new client.
-    const client = await OAuth2Client.create({
-      name: 'the client',
-      redirectUris: ['/'],
-      grants: ['password', 'refresh_token']
-    });
-
-    // create a new user.
-    await OAuth2User.create({
-      name: 'a user',
-      email: 'example@example.com',
-      username: 'the username',
-      password: 'the password',
-    });
-
-    // create some scopes.
-    await OAuth2Scope.insertMany([
-      { name: 'basic' },
-      { name: 'admin' },
-      { name: 'edit' },
-    ]);
-
-    // generate the OAuth2 server.
-    const oauth = new OAuth2Server({
-      model: new MongooseOAuth2(),
-      requireClientAuthentication: {
-        password: false,
-        refresh_token: false,
-      },
-    });
-
-    let tokenRequest = new Request({
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "content-length": 1,
-      },
-      query: {},
-      body: {
-        client_id: client._id.toString(),
-        grant_type: 'password',
-        username: 'the username',
-        password: 'the password',
-        scope: 'basic,admin',
-      }
-    });
-
-    // at first, generate the token.
-    let token = await oauth.token(tokenRequest, new Response());
-
-    // then, try to refresh the token.
-    let refreshTokenRequest = new Request({
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "content-length": 1,
-      },
-      query: {
-
-      },
-      body: {
-        client_id: client._id.toString(),
-        grant_type: 'refresh_token',
-        refresh_token: token.refreshToken,
-      }
-    });
-
-    let refreshedToken = await oauth.token(
-      refreshTokenRequest,
-      new Response(),
-    );
-
-    expect(refreshedToken.accessToken).to.exist;
-    expect(refreshedToken.accessTokenExpiresAt).to.exist;
-    expect(refreshedToken.refreshToken).to.exist;
-    expect(refreshedToken.refreshTokenExpiresAt).to.exist;
-    expect(refreshedToken.scope).to.exist;
-    expect(refreshedToken.client).to.exist;
-    expect(refreshedToken.user).to.exist;
+    expect(authenticatedToken).to.be.null;
   });
 });
