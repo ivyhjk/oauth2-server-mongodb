@@ -7,15 +7,15 @@ describe('Scope model', () => {
   });
 
   it('try to create a new scope without a name', async () => {
-      let scope = null;
+    let scope = null;
 
-      try {
-        scope = await OAuth2Scope.create({});
-      } catch (e) {
-        expect(e.message).to.equal('OAuth2Scope validation failed: name: Path `name` is required.');
-      }
+    try {
+      scope = await OAuth2Scope.create({});
+    } catch (e) {
+      expect(e.message).to.equal('OAuth2Scope validation failed: name: Path `name` is required.');
+    }
 
-      expect(scope).to.be.null;
+    expect(scope).to.be.null;
   });
 
   it('create a new scope', async () => {
@@ -24,7 +24,7 @@ describe('Scope model', () => {
       description: 'Bar baz'
     });
 
-    let scope = await OAuth2Scope.findOne({name: 'Foo'});
+    let scope = await OAuth2Scope.findOne({ name: 'Foo' });
 
     expect(scope).to.not.be.null;
     expect(scope.name).to.equal('Foo');

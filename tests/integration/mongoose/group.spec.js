@@ -7,15 +7,15 @@ describe('Group model', () => {
   });
 
   it('try to create a new group without a name', async () => {
-      let group = null;
+    let group = null;
 
-      try {
-        group = await OAuth2Group.create({});
-      } catch (e) {
-        expect(e.message).to.equal('OAuth2Group validation failed: name: Path `name` is required.');
-      }
+    try {
+      group = await OAuth2Group.create({});
+    } catch (e) {
+      expect(e.message).to.equal('OAuth2Group validation failed: name: Path `name` is required.');
+    }
 
-      expect(group).to.be.null;
+    expect(group).to.be.null;
   });
 
   it('create a new group', async () => {
@@ -27,7 +27,7 @@ describe('Group model', () => {
       ],
     });
 
-    let group = await OAuth2Group.findOne({name: 'Foo'});
+    let group = await OAuth2Group.findOne({ name: 'Foo' });
 
     expect(group).to.not.be.null;
     expect(group.name).to.equal('Foo');

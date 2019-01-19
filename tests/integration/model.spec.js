@@ -198,7 +198,7 @@ describe('OAuth2 Mongoose model integration', () => {
       refreshTokenExpiresAt: new Date(),
       user: user,
       client: client,
-      scopes: [ firstScope._id ],
+      scopes: [firstScope._id],
       revokedAt: null
     });
 
