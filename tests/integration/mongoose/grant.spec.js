@@ -7,15 +7,15 @@ describe('Grant model', () => {
   });
 
   it('try to create a new grant without a name', async () => {
-      let grant = null;
+    let grant = null;
 
-      try {
-        grant = await OAuth2Grant.create({});
-      } catch (e) {
-        expect(e.message).to.equal('OAuth2Grant validation failed: name: Path `name` is required.');
-      }
+    try {
+      grant = await OAuth2Grant.create({});
+    } catch (e) {
+      expect(e.message).to.equal('OAuth2Grant validation failed: name: Path `name` is required.');
+    }
 
-      expect(grant).to.be.null;
+    expect(grant).to.be.null;
   });
 
   it('create a new grant', async () => {
@@ -36,7 +36,7 @@ describe('Grant model', () => {
       ],
     });
 
-    let grant = await OAuth2Grant.findOne({name: 'Foo'}).populate('scopes');
+    let grant = await OAuth2Grant.findOne({ name: 'Foo' }).populate('scopes');
 
     expect(grant).to.not.be.null;
     expect(grant.name).to.equal('Foo');
