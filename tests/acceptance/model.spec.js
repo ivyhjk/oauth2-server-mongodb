@@ -39,6 +39,7 @@ describe('OAuth2 Mongoose model acceptance', () => {
     expect(token.refreshToken).to.exist;
     expect(token.refreshTokenExpiresAt).to.exist;
     expect(token.scope).to.exist;
+    expect(token.scope).to.be.a('string');
     expect(token.client).to.exist;
     expect(token.user).to.exist;
   });
@@ -74,6 +75,7 @@ describe('OAuth2 Mongoose model acceptance', () => {
     expect(refreshedToken.refreshToken).to.exist;
     expect(refreshedToken.refreshTokenExpiresAt).to.exist;
     expect(refreshedToken.scope).to.exist;
+    expect(refreshedToken.scope).to.be.a('string');
     expect(refreshedToken.client).to.exist;
     expect(refreshedToken.user).to.exist;
   });
