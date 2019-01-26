@@ -1,4 +1,4 @@
-# OAuth2 server MongoDB
+# OAuth2 server MongoDB models
 
 The goal of this bundle is provide a full implementation of
 [oauth2-server](https://github.com/oauthjs/node-oauth2-server) model made with
