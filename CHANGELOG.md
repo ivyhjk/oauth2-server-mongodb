@@ -7,10 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
-## [1.0.1](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.1) - 2019-01-26
+## [1.0.2](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.2) - 2019-01-26
+
+### Added
+
+- Changelog file.
 
 ### Fixed
 
+- Docs package name.
 - Scope RFC (#2).
 
 ## [1.0.0](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.0) - 2019-01-19
