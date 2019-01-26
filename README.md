@@ -8,19 +8,19 @@ MongoDB and Mongoose.
 
 With Yarn:
 ```
-yarn add oauth2-server-mongodb
+yarn add oauth2-server-mongoose-models
 ```
 
 With NPM:
 ```
-npm install --save oauth2-server-mongodb
+npm install --save oauth2-server-mongoose-models
 ```
 
 ## Usage
 
 Simple usage:
 ```javascript
-import { MongooseOAuth2 } from 'oauth2-server-mongodb';
+import { MongooseOAuth2 } from 'oauth2-server-mongoose-models';
 
 const model = new MongooseOAuth2();
 
@@ -30,7 +30,7 @@ const model = new MongooseOAuth2();
 
 Also you can use your custom models:
 ```javascript
-import { MongooseOAuth2 } from 'oauth2-server-mongodb';
+import { MongooseOAuth2 } from 'oauth2-server-mongoose-models';
 import { User, Token } from './custom-models';
 
 const model = new MongooseOAuth2({ User, Token });
