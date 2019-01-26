@@ -185,7 +185,7 @@ export class MongooseOAuth2 {
       accessTokenExpiresAt: repository.accessTokenExpiresAt,
       refreshToken: repository.refreshToken,
       refreshTokenExpiresAt: repository.refreshTokenExpiresAt,
-      scope: repository.scopes,
+      scope: repository.scopes.join(' '),
       client: {
         id: repository.client.toString(),
       },
@@ -196,11 +196,11 @@ export class MongooseOAuth2 {
   }
 
   async validateScope(user, _client, scope) {
-    if (typeof scope === 'undefined' || scope.length < 1) {
+    if (typeof scope === 'undefined' || ! scope) {
       return false;
     }
 
-    const scopes = scope.split(',');
+    const scopes = scope.split(' ');
 
     let databaseScopes = (await this.Scope
       .find({

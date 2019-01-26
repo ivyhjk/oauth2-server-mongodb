@@ -45,7 +45,7 @@ const generateToken = async () => {
       grant_type: 'password',
       username: 'the username',
       password: 'the password',
-      scope: 'basic,admin',
+      scope: 'basic admin',
     }
   });
 

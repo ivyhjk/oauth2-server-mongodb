@@ -439,8 +439,7 @@ describe('OAuth2 Mongoose model integration', () => {
     expect(savedToken.accessTokenExpiresAt).to.be.equal(accessTokenExpiresAt);
     expect(savedToken.refreshToken).to.be.equal('refresh token');
     expect(savedToken.refreshTokenExpiresAt).to.be.equal(refreshTokenExpiresAt);
-    expect(savedToken.scope[0]).to.be.equal('basic');
-    expect(savedToken.scope[1]).to.be.equal('admin');
+    expect(savedToken.scope).to.be.equal('basic admin');
     expect(savedToken.client.id.toString()).to.be.equal(client.id.toString());
     expect(savedToken.user.id).to.be.equal(user.id.toString());
   });
@@ -448,7 +447,7 @@ describe('OAuth2 Mongoose model integration', () => {
   it('should return nullable scope, because scopes are empty', async () => {
     const user = {};
     const client = {};
-    const scopes = [];
+    const scopes = '';
 
     const model = new MongooseOAuth2();
 
@@ -496,7 +495,7 @@ describe('OAuth2 Mongoose model integration', () => {
       'admin',
       'invalid',
       'another invalid',
-    ].join(',');
+    ].join(' ');
 
     const model = new MongooseOAuth2();
 
