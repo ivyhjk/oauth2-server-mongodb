@@ -8,6 +8,11 @@ export default function(schema) {
         && this._update.password
       ) {
         this._update.password = await Argon2.hash(this._update.password);
+      } else if (
+        typeof this._update['$set'] !== 'undefined'
+        && this._update['$set'].password
+      ) {
+        this._update['$set'].password = await Argon2.hash(this._update['$set'].password);
       }
     } else if (typeof this.password !== 'undefined' && this.password) {
       this.password = await Argon2.hash(this.password);

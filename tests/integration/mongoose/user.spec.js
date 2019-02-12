@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import Argon2 from 'argon2';
 import { OAuth2User, OAuth2Group } from './../../../src/mongoose';
 
 describe('User model', () => {
@@ -63,6 +64,10 @@ describe('User model', () => {
       const anotherUpdate = await OAuth2User.findOne({ _id: user._id.toString() });
 
       expect(anotherUpdate.password).to.not.be.equal(user.password);
+      expect(anotherUpdate.password).to.not.be.equal('the new password');
+      expect(
+        await Argon2.verify(anotherUpdate.password, 'the new password')
+      ).to.be.true;
     }
   );
 });
