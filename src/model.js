@@ -8,23 +8,24 @@ import {
   OAuth2User,
 } from './mongoose';
 
+const defaults = [
+  ['Client', OAuth2Client],
+  ['Grant', OAuth2Grant],
+  ['Group', OAuth2Group],
+  ['Scope', OAuth2Scope],
+  ['Token', OAuth2Token],
+  ['User', OAuth2User],
+];
+
 export class MongooseOAuth2 {
-  constructor(
-    { Client, Grant, Group, Scope, Token, User } = {
-      Client: OAuth2Client,
-      Grant: OAuth2Grant,
-      Group: OAuth2Group,
-      Scope: OAuth2Scope,
-      Token: OAuth2Token,
-      User: OAuth2User,
+  constructor(models = {}) {
+    for (const [key, value] of defaults) {
+      if (typeof models[key] === 'undefined') {
+        this[key] = value;
+      } else {
+        this[key] = models[key];
+      }
     }
-  ) {
-    this.Client = Client;
-    this.Grant = Grant;
-    this.Group = Group;
-    this.Scope = Scope;
-    this.Token = Token;
-    this.User = User;
   }
 
   async getAccessToken(accessToken) {
