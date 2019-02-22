@@ -7,7 +7,7 @@ project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
-## [1.0.4](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.4) - 2019-02-22
+## [1.0.5](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.5) - 2019-02-22
 
 ### Fixed
 
