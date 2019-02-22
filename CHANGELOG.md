@@ -7,6 +7,16 @@ project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+## [1.0.4](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.4) - 2019-02-22
+
+### Fixed
+
+- Default mongoose models on OAuth2 model implementation.
+
+### Removed
+
+- Default value for tokens lifetime.
+
 ## [1.0.3](https://github.com/ivyhjk/oauth2-server-mongoose-models/releases/tag/v1.0.3) - 2019-02-11
 
 ### Fixed
