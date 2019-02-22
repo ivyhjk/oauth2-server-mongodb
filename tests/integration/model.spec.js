@@ -261,8 +261,8 @@ describe('OAuth2 Mongoose model integration', () => {
     expect(client.redirectUris[0]).to.be.equal('/');
     expect(client.redirectUris[1]).to.be.equal('/dashboard');
     expect(client.grants[0]).to.be.equal('password');
-    expect(client.accessTokenLifetime).to.be.equal(3600);
-    expect(client.refreshTokenLifetime).to.be.equal(3600);
+    expect(client.accessTokenLifetime).to.be.null;
+    expect(client.refreshTokenLifetime).to.be.null;
   });
 
   it(
@@ -311,8 +311,6 @@ describe('OAuth2 Mongoose model integration', () => {
       expect(client.redirectUris[0]).to.be.equal('/');
       expect(client.redirectUris[1]).to.be.equal('/dashboard');
       expect(client.grants[0]).to.be.equal('password');
-      expect(client.accessTokenLifetime).to.be.equal(3600);
-      expect(client.refreshTokenLifetime).to.be.equal(3600);
     }
   );
 
