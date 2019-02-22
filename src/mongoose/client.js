@@ -26,11 +26,11 @@ export const OAuth2ClientSchema = new Schema(
     },
     accessTokenLifetime: {
       type: Number,
-      default: 3600,
+      default: null,
     },
     refreshTokenLifetime: {
       type: Number,
-      default: 3600,
+      default: null,
     },
     redirectUris: {
       type: [String],
